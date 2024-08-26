@@ -276,8 +276,8 @@ cron.schedule("00 09 * * *", () => {
             <h3>Danh sách công việc cần làm hôm nay:</h3>
             ${taskList}
             <p>Nhấn vào link bên dưới để biết thêm về nội dung công việc.</p>
-            <a href="http://localhost:3000/task?user=${listAccounts[i].gmail}">
-              http://localhost:3000/task?user=${listAccounts[i].gmail}
+            <a href="https://assign-work-client.vercel.app/task?user=${listAccounts[i].gmail}">
+              https://assign-work-client.vercel.app/task?user=${listAccounts[i].gmail}
             </a>
           </div>
         `;
@@ -322,8 +322,8 @@ cron.schedule("00 23 * * *", () => {
             <h3>Danh sách công việc cần làm hôm nay:</h3>
             ${taskList}
             <p>Nhấn vào link bên dưới để biết thêm về nội dung công việc.</p>
-            <a href="http://localhost:3000/task?user=${listAccounts[i].gmail}">
-              http://localhost:3000/task?user=${listAccounts[i].gmail}
+            <a href="https://assign-work-client.vercel.app/task?user=${listAccounts[i].gmail}">
+              https://assign-work-client.vercel.app/task?user=${listAccounts[i].gmail}
             </a>
           </div>
         `;
@@ -345,8 +345,8 @@ cron.schedule('00 10 * * 0', () => {
   const content = `
           <div>
             <p>Xắp xếp công việc và kiểm tra đánh giá.</p>
-            <a href="http://localhost:3000/admin">
-              http://localhost:3000/admin
+            <a href="https://assign-work-client.vercel.app/admin">
+              https://assign-work-client.vercel.app/admin
             </a>
           </div>
         `;
