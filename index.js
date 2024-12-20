@@ -23,20 +23,52 @@ db.connect((err) => {
 });
 
 app.post("/add-user", (req, res) => {
-
   const ip = req.body.ip || req.query.ip; // Lấy dữ liệu 'ip' từ body request
-    if (!ip) {
-        return res.status(400).json({ error: 'IP is required' });
-    }
+  if (!ip) {
+    return res.status(400).json({ error: "IP is required" });
+  }
 
-  const q =
-    "INSERT INTO `user`( `ip`) VALUES (?)";
+  const q = "INSERT INTO `user`( `ip`) VALUES (?)";
 
   db.query(q, [ip], function (err, result) {
     if (err) throw err;
     res.status(200).json({ message: "User added successfully" });
   });
-})
+});
+
+app.get("/get-char-user", (req, res) => {
+  const { type, month, year } = req.query; // Dùng req.query để lấy tham số
+
+  if (!type) {
+    return res.status(400).json({ error: "type is required" });
+  }
+
+  let q = "";
+
+  // Xử lý với type là "day"
+  if (type === "day") {
+    q =
+      "SELECT DAY(`date`) AS day, COUNT(*) AS user_count FROM `user` WHERE month(`date`) = ? and year(`date`)= ?  GROUP BY DAY(`date`)";
+  } else if (type === "month") {
+    q = `SELECT month(date) AS day, COUNT(*) AS user_count FROM user WHERE  year(date)=${year}  GROUP BY month(date)`;
+  } else if (type === "year") {
+    q =
+      "SELECT year(`date`) AS day, COUNT(*) AS user_count FROM `user` GROUP BY year(`date`)";
+  } else {
+    res.status(400).json({ error: "Invalid type value" });
+  }
+
+  db.query(q, [month, year], function (err, result) {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.status(200).json({
+      labels: result.map((item) => item.day),
+      data: result.map((item) => item.user_count),
+    });
+  });
+});
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -374,8 +406,5 @@ app.get("/", (req, res) => {
 //           1
 //         );
 // });
-
-
-
 
 app.listen(8000, () => console.log("server is running in port 8000"));
