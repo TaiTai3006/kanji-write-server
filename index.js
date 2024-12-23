@@ -24,13 +24,14 @@ db.connect((err) => {
 
 app.post("/add-user", (req, res) => {
   const ip = req.body.ip || req.query.ip; // Lấy dữ liệu 'ip' từ body request
+  const city = req.body.city || req.query.city; // Lấy dữ liệu 'city' từ body request
   if (!ip) {
     return res.status(400).json({ error: "IP is required" });
   }
 
-  const q = "INSERT INTO `user`( `ip`) VALUES (?)";
+  const q = "INSERT INTO `user`(`ip`, `city`) VALUES (?,?)";
 
-  db.query(q, [ip], function (err, result) {
+  db.query(q, [ip, city], function (err, result) {
     if (err) throw err;
     res.status(200).json({ message: "User added successfully" });
   });
