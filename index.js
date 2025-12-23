@@ -37,6 +37,18 @@ app.post("/add-user", (req, res) => {
   });
 });
 
+app.post("/add-feedback", (req, res) => {
+  const name = req.body.name || req.query.name; 
+  const feedback = req.body.feedback || req.query.feedback; 
+
+  const q = "INSERT INTO `contract`(`name`, `feedback`) VALUES (?,?)";
+
+  db.query(q, [name, feedback], function (err, result) {
+    if (err) throw err;
+    res.status(200).json({ message: "Feedback added successfully", data: {name, feedback} });
+  });
+});
+
 app.get("/get-char-user", (req, res) => {
   const { type, month, year } = req.query; // Dùng req.query để lấy tham số
 
