@@ -45,7 +45,7 @@ app.post("/add-feedback", (req, res) => {
 
   db.query(q, [name, feedback], function (err, result) {
     if (err) throw err;
-    res.status(200).json({ message: "Feedback added successfully", data: {name, feedback} });
+    res.status(200).json({ message: "Feedback added successfully"});
   });
 });
 
